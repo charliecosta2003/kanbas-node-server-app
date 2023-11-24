@@ -13,6 +13,9 @@ function UserRoutes(app) {
 
     const findAllUsers = async (req, res) => {
         const users = await dao.findAllUsers();
+        const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || 'mongodb://127.0.0.1:27017/kanbas'
+        console.log(process.env.DB_CONNECTION_STRING);
+        console.log(CONNECTION_STRING);
         res.json(users);
     };
 
