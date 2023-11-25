@@ -29,11 +29,22 @@ function UserRoutes(app) {
 
     const updateUser = async (req, res) => {
         const {userId} = req.params;
+        const {signedIn} = req.query;
         const status = await dao.updateUser(userId, req.body);
-        // const currentUser = await dao.findUserById(userId);
-        // req.session['currentUser'] = currentUser;
+        if (signedIn === 'true') {
+            const currentUser = await dao.findUserById(userId);
+            req.session['currentUser'] = currentUser;
+        }
         res.json(status);
     };
+
+    // const updateUser = async (req, res) => {
+    //     const {userId} = req.params;
+    //     const status = await dao.updateUser(userId, req.body);
+    //     const updatedUser = await dao.findUserById(userId);
+    //     req.session['updatedUser'] = updatedUser;
+    //     res.json(status);
+    // }
 
     const signup = async (req, res) => {
         const user = await dao.findUserByUsername(req.body.username);
